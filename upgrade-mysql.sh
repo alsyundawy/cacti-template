@@ -33,9 +33,7 @@ if [[ `whoami` == "root" ]]; then
     printerror "You ran me as root! Do not run me as root!"
     exit 1
 elif grep -q "Raspbian GNU/Linux 9" /etc/os-release; then
-  printerror "Sorry, Raspbian not supported for MariaDB upgrade yet, cannot proceed..."
   printinfo
-  exit 1
 	if [[ `whoami` != "pi" ]]; then
 		printerror "Uh-oh. You are not logged in as the default pi user. Exiting..."
 		exit 1
@@ -43,12 +41,11 @@ elif grep -q "Raspbian GNU/Linux 9" /etc/os-release; then
 		os_dist=raspbian
 		os_name=Raspbian
 		webserver=apache2
+		pkg_mgr=yum
 		verphp="$(php -v | grep -Po '(?<=PHP )([0-7.]+)' | cut -c-3)"
 	fi
 elif grep -q "Raspbian GNU/Linux 10" /etc/os-release; then
-  printerror "Sorry, Raspbian not supported for MariaDB upgrade yet, cannot proceed..."
   printinfo
-  exit 1
 	if [[ `whoami` != "pi" ]]; then
 		printerror "Uh-oh. You are not logged in as the default pi user. Exiting..."
 		printinfo
@@ -57,6 +54,7 @@ elif grep -q "Raspbian GNU/Linux 10" /etc/os-release; then
 		os_dist=raspbian
 		os_name=Raspbian
 		webserver=apache2
+		pkg_mgr=yum
 		verphp="$(php -v | grep -Po '(?<=PHP )([0-7.]+)' | cut -c-3)"
 	fi
 elif grep -q "CentOS Linux 7" /etc/os-release; then
