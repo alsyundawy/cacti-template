@@ -200,7 +200,7 @@ upgradeAsk () {
 }
 
 phpCheck () {
-	#check version of PHP installed
+	#Cacti v1.3.x requires PHP > 7.2
 	php -r 'exit((int)version_compare(PHP_VERSION, "7.2.0", "<"));'
 	if [ $? -ne 0 ];then
 		printinfo
@@ -229,7 +229,7 @@ if version_ge $cactiver $upgrade_version; then
 		printinfo
 		printNotices
 		#check for PHP version upgrade
-		phpCheck
+		bash <(curl -s https://raw.githubusercontent.com/KnoAll/cacti-template/$branch/upgrade-php.sh) $param1
 		upgrade-plugins
 		check-smokeping
 		printinfo "All done!"
@@ -237,7 +237,7 @@ if version_ge $cactiver $upgrade_version; then
         else
 		printNotices
 		#check for PHP version upgrade
-		bash <(curl -s https://raw.githubusercontent.com/KnoAll/cacti-template/$branch/upgrade-php.sh) $param1
+		phpCheck
 		upgradeAsk
         fi
 else
