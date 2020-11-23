@@ -194,11 +194,33 @@ upgradeAsk () {
 		* ) 
 			printwarn "You have entered an invallid selection!"
 			printinfo "Please try again!"
-			upgradeAsk
+			phpCheck
 		;;
 		esac
 }
 
+phpCheck () {
+	#check version of PHP installed
+	php -r 'exit((int)version_compare(PHP_VERSION, "7.2.0", "<"));'
+	if [ $? -ne 0 ];then
+		printinfo
+		read -p "Cacti v1.3.X requires PHP V7.2+ you cannot upgrade Cacti without upgrading PHP. Do you wish to upgrade PHP? y/N: " upAsk
+		case "$upAsk" in
+		y | Y | yes | YES| Yes ) printinfo
+			bash <(curl -s https://raw.githubusercontent.com/KnoAll/cacti-template/$branch/upgrade-php.sh) $param1
+		;;
+		* ) 
+			printwarn "Cannot upgrade Cacti without the require PHP version Exiting."
+			if [[ $param1 == "dev" ]]; then
+				printwarn $param1
+			else
+				counter=$( curl -s http://www.kevinnoall.com/cgi-bin/counter/unicounter.pl?name=decline-upgrade-php&write=0 )
+			fi
+			exit 1
+		;;
+		esac
+	fi
+}
 
 if version_ge $cactiver $upgrade_version; then
         if version_ge $cactiver $prod_version; then
