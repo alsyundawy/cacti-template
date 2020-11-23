@@ -365,6 +365,7 @@ if [[ $1 == "develop" ]]; then
 		exit 1
 	else
 		git checkout $1
+		cp cacti_$cactiver/include/config.php cacti/include/
 	fi
 else
 	wget -q https://github.com/Cacti/cacti/archive/release/$prod_version.tar.gz
