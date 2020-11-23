@@ -421,6 +421,7 @@ if [[ $1 == "develop" ]]; then
 	cd spine
 	git checkout $1
 	printinfo "Bootstrapping spine..."
+	chmod +x bootstrap
 	./bootstrap
 else
 	wget -q https://www.cacti.net/downloads/spine/cacti-spine-$prod_version.tar.gz
