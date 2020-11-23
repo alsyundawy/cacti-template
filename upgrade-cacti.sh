@@ -194,7 +194,7 @@ upgradeAsk () {
 		* ) 
 			printwarn "You have entered an invallid selection!"
 			printinfo "Please try again!"
-			phpCheck
+			upgradeAsk
 		;;
 		esac
 }
@@ -229,7 +229,7 @@ if version_ge $cactiver $upgrade_version; then
 		printinfo
 		printNotices
 		#check for PHP version upgrade
-		bash <(curl -s https://raw.githubusercontent.com/KnoAll/cacti-template/$branch/upgrade-php.sh) $param1
+		phpCheck
 		upgrade-plugins
 		check-smokeping
 		printinfo "All done!"
