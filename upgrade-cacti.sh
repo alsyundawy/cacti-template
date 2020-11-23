@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# bash <(curl -s https://raw.githubusercontent.com/KnoAll/cacti-template/dev/upgrade-cacti.sh)
+# bash <(curl -s https://raw.githubusercontent.com/KnoAll/cacti-template/dev-1.3/upgrade-cacti.sh)
 green=$(tput setaf 2)
 red=$(tput setaf 1)
 tan=$(tput setaf 3)
 reset=$(tput sgr0)
 errorcount=0
-branch=master
+branch=dev-1.3
 
 printinfo() {
 	printf "${tan}::: ${green}%s${reset}\n" "$@"
@@ -40,8 +40,8 @@ esac
 # get the Cacti version
 upgrade_version=1.1.6
 # get ready for dynamic update
-#prod_version=$( curl -s https://raw.githubusercontent.com/Cacti/cacti/master/include/cacti_version )
-prod_version=1.2.15
+prod_version=$( curl -s https://raw.githubusercontent.com/Cacti/cacti/develop/include/cacti_version )
+#prod_version=1.3.0.-1
 symlink_cactidir=1.1.28
 cactiver=$( cat /var/www/html/cacti/include/cacti_version )
 config_path=/var/www/html/cacti/include/config.php
@@ -52,7 +52,8 @@ fi
 if [[ $1 == "dev" || $1 == "--switch-dev" ]]; then
 	param1=$1
 	param2=$2
-	branch=dev
+	#branch=dev
+	branch=dev-1.3
 	printwarn "Now on DEV branch."
 	if [[ $2 == "develop" ]]; then
 		prod_version=$( curl -s https://raw.githubusercontent.com/Cacti/cacti/develop/include/cacti_version )
