@@ -420,9 +420,7 @@ if [[ $1 == "develop" ]]; then
 	git clone https://github.com/Cacti/spine.git
 	cd spine
 	git checkout $1
-	printinfo "Bootstrapping spine..."
-	chmod +x bootstrap
-	./bootstrap
+
 else
 	wget -q https://www.cacti.net/downloads/spine/cacti-spine-$prod_version.tar.gz
 	if [ $? -ne 0 ];then
@@ -439,6 +437,8 @@ if [[ $pkg_mgr == "yum" ]]; then
 else
 	sudo $pkg_mgr install -y -qq gcc glibc-doc build-essential gdb autoconf
 fi
+printinfo "Bootstrapping spine..."
+chmod +x bootstrap
 ./bootstrap
 ./configure
 make 
